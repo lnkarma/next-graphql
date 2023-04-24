@@ -1,17 +1,18 @@
 import { Post, posts } from "@/data/data";
+import { Resolvers } from "@/graphql/server";
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
-import { gql } from "graphql-tag";
+import { readFileSync } from "fs";
 import { NextRequest } from "next/server";
 
-const resolvers = {
+const resolvers: Resolvers = {
   Query: {
     hello: () => "world",
     posts: () => posts,
   },
 
   Mutation: {
-    addPost: (_: any, { title }: { title: string }) => {
+    addPost: (_, { title }) => {
       const newPost: Post = {
         id: Math.random().toString(),
         title,
@@ -23,31 +24,11 @@ const resolvers = {
   },
 };
 
-const typeDefs = gql`
-  type Post {
-    id: String
-    title: String
-    likes: Int
-  }
+const typeDefs = readFileSync("./graphql/schema.graphql", {
+  encoding: "utf-8",
+});
 
-  type Query {
-    hello: String
-    posts: [Post]
-  }
-
-  type Mutation {
-    addPost(title: String!): Post
-  }
-
-  mutation AddPost($title: String!) {
-    addPost(title: $title) {
-      id
-      title
-    }
-  }
-`;
-
-const server = new ApolloServer({
+const server = new ApolloServer<{}>({
   resolvers,
   typeDefs,
 });

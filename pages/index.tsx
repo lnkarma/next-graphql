@@ -1,23 +1,22 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
-import { Post } from "@/data/data";
 import AddPost from "@/components/AddPost";
+import { graphql } from "@/graphql/client";
+import { Box, List, ListItem } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
-  const { data, loading, error } = useQuery(gql`
-    query Posts {
-      posts {
-        id
-        title
-        likes
-      }
+const GET_POSTS = graphql(/* GraphQL */ `
+  query Posts {
+    posts {
+      title
     }
-  `);
+  }
+`);
+
+export default function Home() {
+  const { data, loading, error } = useQuery(GET_POSTS);
   console.log({ data, loading, error });
 
   return (
@@ -28,14 +27,23 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
+      <main className={`${inter.className}`}>
         <AddPost />
-        {data &&
-          data.posts.map((post: Post) => (
+        <Box>
+          {data && data.posts && (
             <>
-              <h1>{post.title}</h1>
+              <List>
+                {data.posts.map((post) => {
+                  return (
+                    <>
+                      <ListItem key={post?.title}>{post?.title}</ListItem>
+                    </>
+                  );
+                })}
+              </List>
             </>
-          ))}
+          )}
+        </Box>
       </main>
     </>
   );

@@ -1,0 +1,21 @@
+type Post {
+  id: String
+  title: String
+  likes: Int
+}
+
+type Query {
+  hello: String
+  posts: [Post]
+}
+
+type Mutation {
+  addPost(title: String!): Post
+}
+
+mutation AddPost($title: String!) {
+  addPost(title: $title) {
+    id
+    title
+  }
+}
