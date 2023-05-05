@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { useQuery } from "@apollo/client";
 import AddPost from "@/components/AddPost";
 import { graphql } from "@/graphql/client";
-import { Box, List, ListItem } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +18,14 @@ const GET_POSTS = graphql(/* GraphQL */ `
 export default function Home() {
   const { data, loading, error } = useQuery(GET_POSTS);
   console.log({ data, loading, error });
+
+  if (error) {
+    return (
+      <>
+        <Typography>{error.networkError?.message}</Typography>
+      </>
+    );
+  }
 
   return (
     <>
