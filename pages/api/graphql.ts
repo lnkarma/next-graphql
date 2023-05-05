@@ -1,5 +1,5 @@
-import { Post, posts } from "@/data/data";
-import { Resolvers } from "@/graphql/server";
+import { posts } from "@/data/data";
+import { Post, Resolvers } from "@/graphql/server";
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { readFileSync } from "fs";
@@ -17,6 +17,10 @@ const resolvers: Resolvers = {
         id: Math.random().toString(),
         title,
         likes: 0,
+        author: {
+          id: "123",
+          name: "test user",
+        },
       };
       posts.push(newPost);
       return newPost;

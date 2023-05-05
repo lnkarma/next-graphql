@@ -16,7 +16,7 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addPost?: Maybe<Post>;
+  addPost: Post;
 };
 
 
@@ -26,15 +26,22 @@ export type MutationAddPostArgs = {
 
 export type Post = {
   __typename?: 'Post';
-  id?: Maybe<Scalars['String']>;
-  likes?: Maybe<Scalars['Int']>;
-  title?: Maybe<Scalars['String']>;
+  author: User;
+  id: Scalars['String'];
+  likes: Scalars['Int'];
+  title: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
   hello?: Maybe<Scalars['String']>;
-  posts?: Maybe<Array<Maybe<Post>>>;
+  posts?: Maybe<Array<Post>>;
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type AddPostMutationVariables = Exact<{
@@ -42,12 +49,12 @@ export type AddPostMutationVariables = Exact<{
 }>;
 
 
-export type AddPostMutation = { __typename?: 'Mutation', addPost?: { __typename?: 'Post', id?: string | null, title?: string | null, likes?: number | null } | null };
+export type AddPostMutation = { __typename?: 'Mutation', addPost: { __typename?: 'Post', id: string, title: string, likes: number } };
 
 export type PostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts?: Array<{ __typename?: 'Post', title?: string | null } | null> | null };
+export type PostsQuery = { __typename?: 'Query', posts?: Array<{ __typename?: 'Post', title: string }> | null };
 
 
 export const AddPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"likes"}}]}}]}}]} as unknown as DocumentNode<AddPostMutation, AddPostMutationVariables>;

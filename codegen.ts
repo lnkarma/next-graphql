@@ -11,6 +11,11 @@ const config: CodegenConfig = {
         "typescript-document-nodes",
       ],
     },
+    "graphql/client/": {
+      documents: "**/*.tsx",
+      preset: "client",
+      plugins: [],
+    },
   },
 };
 

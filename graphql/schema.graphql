@@ -1,16 +1,22 @@
+type User {
+  id: String!
+  name: String!
+}
+
 type Post {
-  id: String
-  title: String
-  likes: Int
+  id: String!
+  title: String!
+  likes: Int!
+  author: User!
 }
 
 type Query {
   hello: String
-  posts: [Post]
+  posts: [Post!]
 }
 
 type Mutation {
-  addPost(title: String!): Post
+  addPost(title: String!): Post!
 }
 
 mutation AddPost($title: String!) {

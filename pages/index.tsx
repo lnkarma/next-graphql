@@ -36,7 +36,7 @@ export default function Home() {
                 {data.posts.map((post) => {
                   return (
                     <>
-                      <ListItem key={post?.title}>{post?.title}</ListItem>
+                      <ListItem key={post.title}>{post.title}</ListItem>
                     </>
                   );
                 })}
